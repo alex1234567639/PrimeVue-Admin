@@ -1,25 +1,10 @@
 {
-    // 儲存時自動格式化
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": "explicit",
-        "source.organizeImports": "explicit"
-    },
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "[javascript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.formatOnSave": true
-    },
-    "[vue]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.formatOnSave": true
-    },
-    "[typescript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.formatOnSave": true
-    },
-    "[json]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.formatOnSave": true
-    }
+  // 儲存時自動格式化
+  "editor.formatOnSave": true,
+  // 設定 Prettier 為預設格式化工具
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // 可選：針對 ESLint 也啟用自動修復（例如修正錯誤與 warning）
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  }
 }

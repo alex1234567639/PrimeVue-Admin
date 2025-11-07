@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ESNext", // 讓 TypeScript 支援最新語法
+    "useDefineForClassFields": true,
+    "module": "ESNext", // 搭配 Vite 使用原生 ES 模組
+    "moduleResolution": "Node", // Node 方式找尋模組
+    "strict": true, // 開啟所有嚴格模式
+    "jsx": "preserve", // 保留 JSX 給 Vue 處理
+    "importHelpers": true,
+    "esModuleInterop": true, // 支援 default 匯入
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true, // 允許引入 .json 檔案
+    "isolatedModules": true,
+    "skipLibCheck": true, // 跳過類型檢查 node_modules
+    "baseUrl": ".", // 路徑別名起點
+    "paths": {
+      "@/*": ["src/*"] // 路徑別名 @ 對應 src/
+    },
+    "types": ["vite/client"] // 讓 import.meta.env 可用
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "auto-imports.d.ts",
+    "components.d.ts"
+  ]
+}
