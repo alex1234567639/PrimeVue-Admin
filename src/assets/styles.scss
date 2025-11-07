@@ -3,3 +3,32 @@
 @use '@/assets/tailwind.css';
 @use '@/assets/layout/layout.scss';
 @use '@/assets/demo/demo.scss';
+
+@layer base {
+  /* 通用滾動容器樣式 */
+  .scroll {
+    overflow-y: scroll;
+    overscroll-behavior-y: contain;
+  }
+
+  /* 自定義滾動條樣式 - 軌道 */
+  .scroll::-webkit-scrollbar {
+    /* 設定滾動條寬度 */
+    width: 5px;
+  }
+
+  /* 滾動條軌道樣式 */
+  .scroll::-webkit-scrollbar-track {
+    /* 軌道圓角 */
+    border-radius: 3px;
+  }
+
+  /* 滾動條滑塊樣式 */
+  .scroll::-webkit-scrollbar-thumb {
+    /* 滑塊圓角 */
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    /* 半透明背景色 */
+    background: #5656563f;
+  }
+}

@@ -3,7 +3,7 @@
     "target": "ESNext", // 讓 TypeScript 支援最新語法
     "useDefineForClassFields": true,
     "module": "ESNext", // 搭配 Vite 使用原生 ES 模組
-    "moduleResolution": "Node", // Node 方式找尋模組
+    "moduleResolution": "Bundler", // 讓 TS 依 Vite/Nuxt 模式解析套件
     "strict": true, // 開啟所有嚴格模式
     "jsx": "preserve", // 保留 JSX 給 Vue 處理
     "importHelpers": true,
