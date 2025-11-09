@@ -40,7 +40,7 @@
 
         &.layout-static {
             .layout-main-container {
-                margin-left: 22rem;
+                margin-left: 18rem;
             }
 
             &.layout-static-inactive {
@@ -78,6 +78,7 @@
             left: 0;
             top: 0;
             height: 100vh;
+            z-index: 999;
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
             transition:

@@ -2,7 +2,7 @@
 
 .layout-sidebar {
     position: fixed;
-    width: 22rem;
+    width: 18rem;
     height: calc(100vh - 4rem);
     z-index: 996;
     overflow-y: auto;
@@ -83,6 +83,7 @@
             &.active-route {
                 font-weight: 700;
                 color: var(--primary-color);
+                background-color: var(--surface-hover);
             }
 
             &:hover {
