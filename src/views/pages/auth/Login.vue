@@ -16,7 +16,7 @@ const handleLogin = async () => {
     id: "1",
     name: "Alex Wang",
     email: "alex@example.com",
-    permission: "admin",
+    permissions: ["formlayout", "input"],
   });
   router.push("/");
 };

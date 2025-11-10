@@ -18,21 +18,21 @@ type MenuItem = {
 
 // 將路由轉換為選單項目
 const routesToMenu = (routes: RouteRecordRaw[]): MenuItem[] => {
-  const userPermission = authStore.user?.permission as string | undefined;
+  const userPermissions = authStore.user?.permissions as string[] | undefined;
 
   return routes
     .filter((route) => {
-      const routePermissions = route.meta?.permissions as string[] | undefined;
+      const routePermission = route.meta?.permission as string | undefined;
 
-      if (!routePermissions || routePermissions.length === 0) {
+      if (!routePermission) {
         return true;
       }
 
-      if (!userPermission) {
+      if (!userPermissions || userPermissions.length === 0) {
         return false;
       }
 
-      return routePermissions.includes(userPermission);
+      return userPermissions.includes(routePermission);
     })
     .map((route) => ({
       label: route.meta?.label as string | undefined,

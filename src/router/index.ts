@@ -21,6 +21,7 @@ export const UiComponentsRoutes: Array<RouteRecordRaw> = [
     meta: {
       label: "Form Layout",
       icon: "pi pi-fw pi-id-card",
+      permission: "formlayout",
     },
     component: () => import("@/views/uikit/FormLayout.vue"),
   },
@@ -30,6 +31,7 @@ export const UiComponentsRoutes: Array<RouteRecordRaw> = [
     meta: {
       label: "Input",
       icon: "pi pi-fw pi-check-square",
+      permission: "input",
     },
     component: () => import("@/views/uikit/InputDoc.vue"),
   },
@@ -149,7 +151,6 @@ export const UiComponentsRoutes: Array<RouteRecordRaw> = [
     meta: {
       label: "Timeline",
       icon: "pi pi-fw pi-calendar",
-      permissions: ["admin1"],
     },
     component: () => import("@/views/uikit/TimelineDoc.vue"),
   },
@@ -229,7 +230,7 @@ const router = createRouter({
 // 路由守衛
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
-  const permissions = to.meta.permissions as string[];
+  const permission = to.meta.permissions as string;
   const user = await authStore.getUser();
 
   // 檢查是否登入
@@ -245,7 +246,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // 如果路由有權限限制，且使用者沒有對應權限，則跳轉到accessDenied頁面
-  if (to.meta.permissions && user && !permissions.includes(user?.permission)) {
+  if (to.meta.permissions && user && !user?.permissions.includes(permission)) {
     next({ name: "accessDenied" });
   } else {
     next();
