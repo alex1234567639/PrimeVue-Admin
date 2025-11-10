@@ -1,5 +1,6 @@
 import AppLayout from "@/layout/AppLayout.vue";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
 
 export const HomeRoutes: Array<RouteRecordRaw> = [
   {
@@ -148,6 +149,7 @@ export const UiComponentsRoutes: Array<RouteRecordRaw> = [
     meta: {
       label: "Timeline",
       icon: "pi pi-fw pi-calendar",
+      permissions: ["admin1"],
     },
     component: () => import("@/views/uikit/TimelineDoc.vue"),
   },
@@ -162,15 +164,6 @@ export const OtherPagesRoutes: Array<RouteRecordRaw> = [
       icon: "pi pi-fw pi-user",
     },
     children: [
-      {
-        path: "/auth/login",
-        name: "login",
-        meta: {
-          label: "Login",
-          icon: "pi pi-fw pi-sign-in",
-        },
-        component: () => import("@/views/pages/auth/Login.vue"),
-      },
       {
         path: "/auth/error",
         name: "error",
@@ -208,40 +201,12 @@ const routes: Array<RouteRecordRaw> = [
     component: AppLayout,
     children: [...HomeRoutes, ...UiComponentsRoutes],
   },
+  {
+    path: "/login",
+    name: "login",
+    component: () => import("@/views/pages/auth/Login.vue"),
+  },
   ...OtherPagesRoutes,
-  // {
-  //   path: "/pages/notfound",
-  //   name: "notfound",
-  //   meta: {
-  //     label: "Not Found",
-  //     icon: "pi pi-fw pi-exclamation-circle",
-  //   },
-  //   component: () => import("@/views/pages/NotFound.vue"),
-  // },
-
-  // {
-  //   path: "/auth/login",
-  //   name: "login",
-  //   meta: {
-  //     label: "Login",
-  //     icon: "pi pi-fw pi-sign-in",
-  //   },
-  //   component: () => import("@/views/pages/auth/Login.vue"),
-  // },
-  // {
-  //   path: "/auth/error",
-  //   name: "error",
-  //   meta: {
-  //     label: "Error",
-  //     icon: "pi pi-fw pi-times-circle",
-  //   },
-  //   component: () => import("@/views/pages/auth/Error.vue"),
-  // },
-  // {
-  //   path: "/auth/access",
-  //   name: "accessDenied",
-  //   component: () => import("@/views/pages/auth/Access.vue"),
-  // },
 ];
 
 const router = createRouter({
@@ -250,6 +215,18 @@ const router = createRouter({
   scrollBehavior(to, from, savedPosition) {
     return { top: 0 };
   },
+});
+
+// 路由守衛
+router.beforeEach(async (to, from, next) => {
+  const authStore = useAuthStore();
+  const permissions = to.meta.permissions as string[];
+  const user = await authStore.getUser();
+  if (to.meta.permissions && user && !permissions.includes(user?.permission)) {
+    next({ name: "accessDenied" });
+  } else {
+    next();
+  }
 });
 
 export default router;

@@ -3,6 +3,9 @@ import AppMenuItem from "./AppMenuItem.vue";
 import { ref } from "vue";
 import { HomeRoutes, UiComponentsRoutes, OtherPagesRoutes } from "@/router";
 import { RouteRecordRaw } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
+
+const authStore = useAuthStore();
 
 type MenuItem = {
   label?: string;
@@ -15,13 +18,29 @@ type MenuItem = {
 
 // 將路由轉換為選單項目
 const routesToMenu = (routes: RouteRecordRaw[]): MenuItem[] => {
-  return routes.map((route) => ({
-    label: route.meta?.label as string | undefined,
-    icon: route.meta?.icon as string | undefined,
-    to: route.path,
-    class: route.meta?.class as string | undefined,
-    items: route.children ? routesToMenu(route.children) : undefined,
-  }));
+  const userPermission = authStore.user?.permission as string | undefined;
+
+  return routes
+    .filter((route) => {
+      const routePermissions = route.meta?.permissions as string[] | undefined;
+
+      if (!routePermissions || routePermissions.length === 0) {
+        return true;
+      }
+
+      if (!userPermission) {
+        return false;
+      }
+
+      return routePermissions.includes(userPermission);
+    })
+    .map((route) => ({
+      label: route.meta?.label as string | undefined,
+      icon: route.meta?.icon as string | undefined,
+      to: route.path,
+      class: route.meta?.class as string | undefined,
+      items: route.children ? routesToMenu(route.children) : undefined,
+    }));
 };
 
 const model = ref<MenuItem[]>([
