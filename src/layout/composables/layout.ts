@@ -43,12 +43,12 @@ const layoutState = reactive<LayoutState>({
   activeMenuItem: null,
 });
 
-const executeDarkModeToggle = () => {
-  layoutConfig.darkTheme = !layoutConfig.darkTheme;
-  document.documentElement.classList.toggle("app-dark");
-};
-
 export function useLayout() {
+  const executeDarkModeToggle = () => {
+    layoutConfig.darkTheme = !layoutConfig.darkTheme;
+    document.documentElement.classList.toggle("app-dark");
+  };
+
   const setActiveMenuItem = (item: MenuItem) => {
     if (typeof item === "object" && item !== null && "value" in item) {
       layoutState.activeMenuItem = item.value ?? null;
@@ -67,11 +67,6 @@ export function useLayout() {
     }
 
     document.startViewTransition(() => executeDarkModeToggle());
-  };
-
-  const executeDarkModeToggle = () => {
-    layoutConfig.darkTheme = !layoutConfig.darkTheme;
-    document.documentElement.classList.toggle("app-dark");
   };
 
   const toggleMenu = () => {

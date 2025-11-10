@@ -207,6 +207,15 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("@/views/pages/auth/Login.vue"),
   },
   ...OtherPagesRoutes,
+  {
+    path: "/404",
+    name: "404",
+    component: () => import("@/views/pages/NotFound.vue"),
+  },
+  {
+    path: "/:catchAll(.*)",
+    redirect: "/404",
+  },
 ];
 
 const router = createRouter({
@@ -222,6 +231,20 @@ router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
   const permissions = to.meta.permissions as string[];
   const user = await authStore.getUser();
+
+  // 檢查是否登入
+  if (!authStore.isLoggedIn && to.name !== "login") {
+    next({ name: "login" });
+    return;
+  }
+
+  // 若已登入且前往login頁面，則跳轉到首頁
+  if (authStore.isLoggedIn && to.name === "login") {
+    next({ name: "dashboard" });
+    return;
+  }
+
+  // 如果路由有權限限制，且使用者沒有對應權限，則跳轉到accessDenied頁面
   if (to.meta.permissions && user && !permissions.includes(user?.permission)) {
     next({ name: "accessDenied" });
   } else {
