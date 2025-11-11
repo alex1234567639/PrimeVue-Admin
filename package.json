@@ -1,12 +1,13 @@
 {
-  "name": "primevue-admin",
+  "name": "kcg-roadsafety-front",
   "version": "0.0.1",
   "scripts": {
     "dev": "vite --mode development",
     "build:stage": "pnpm run lint && pnpm run format && vite build --mode development",
     "build:prod": "pnpm run lint && pnpm run format && vite build --mode production",
     "preview": "vite preview",
-    "lint": "eslint --fix . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+    "lint": "eslint --ext .ts,.js,.vue src",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@types/lodash": "^4.17.16",

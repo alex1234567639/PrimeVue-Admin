@@ -1,22 +1,22 @@
-import path from 'path';
-import vue from '@vitejs/plugin-vue';
-import AutoImport from 'unplugin-auto-import/vite';
-import Components from 'unplugin-vue-components/vite';
-import { defineConfig } from 'vite';
-import svgLoader from 'vite-svg-loader';
+import path from "path";
+import vue from "@vitejs/plugin-vue";
+import AutoImport from "unplugin-auto-import/vite";
+import Components from "unplugin-vue-components/vite";
+import { defineConfig } from "vite";
+import svgLoader from "vite-svg-loader";
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => {
-  const { PrimeVueResolver } = await import('@primevue/auto-import-resolver');
+  const { PrimeVueResolver } = await import("@primevue/auto-import-resolver");
 
   return {
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, './src')
-      }
+        "@": path.resolve(__dirname, "./src"),
+      },
     },
     optimizeDeps: {
-      noDiscovery: true
+      noDiscovery: true,
     },
     plugins: [
       vue(),
@@ -31,23 +31,23 @@ export default defineConfig(async () => {
       AutoImport({
         // 1. 指定要自動 import 的 API
         imports: [
-          'vue',
-          'vue-router',
+          "vue",
+          "vue-router",
           {
             // 若有其他套件也可引入
-            '@vueuse/core': ['useMouse', 'useEventListener']
-          }
+            "@vueuse/core": ["useMouse", "useEventListener"],
+          },
         ],
 
         // 2. 產生到根目錄，讓 ESLint 可以讀到
         eslintrc: {
           enabled: true,
-          filepath: './.eslintrc-auto-import.json',
-          globalsPropValue: 'readonly'
+          filepath: "./.eslintrc-auto-import.json",
+          globalsPropValue: "readonly",
         },
 
         // 3. 產生 TS 聲明檔
-        dts: 'auto-imports.d.ts'
+        dts: "auto-imports.d.ts",
       }),
 
       /**
@@ -57,11 +57,11 @@ export default defineConfig(async () => {
        */
       Components({
         resolvers: [PrimeVueResolver()],
-        dirs: ['src/components'],
-        extensions: ['vue'],
+        dirs: ["src/components"],
+        extensions: ["vue"],
         deep: true,
-        dts: 'components.d.ts' // 產生類型定義檔
-      })
-    ]
+        dts: "components.d.ts", // 產生類型定義檔
+      }),
+    ],
   };
 });
