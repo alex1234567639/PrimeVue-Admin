@@ -18,13 +18,13 @@ const eslintrcAutoImport = JSON.parse(
   readFileSync(join(__dirname, ".eslintrc-auto-import.json"), "utf-8")
 );
 
-// —— 1. 从 vuePlugin.configs 中拿到 “flat/recommended” 这个 preset 的 rules & settings ——
+// —— 1. 從 vuePlugin.configs 中拿到 “flat/recommended” 這個 preset 的 rules & settings ——
 const {
   rules: vueRecommendedRules = {},
   settings: vueRecommendedSettings = {},
 } = vuePlugin.configs["flat/recommended"];
 
-// —— 2. 从 prettierPlugin.configs 里拿到 “recommended” 的 rules ——
+// —— 2. 從 prettierPlugin.configs 里拿到 “recommended” 的 rules ——
 const { rules: prettierRecommendedRules = {} } =
   prettierPlugin.configs.recommended;
 
@@ -118,7 +118,7 @@ export default [
     rules: {
       ...importRecommended.rules,
       ...importTypeScript.rules,
-      // 只启用 Prettier 的格式检查
+      // 只啟用 Prettier 的格式檢查
       ...prettierRecommendedRules,
       "import/no-unresolved": "error", // 在 import 出錯時更快發現問題
 
